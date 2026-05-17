@@ -165,12 +165,28 @@ em { font-style: italic; }
   border-bottom: 1px solid transparent;
 }
 
-.nav.scrolled {
-  background: rgba(9,8,11,0.88);
+/* Blur lives on ::before so it doesn't create a stacking context that traps
+   position:fixed children (the mobile menu overlay). */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.nav.scrolled {
+  background: rgba(9,8,11,0.88);
   border-bottom-color: var(--border);
   padding: 14px 0;
+}
+
+.nav.scrolled::before {
+  opacity: 1;
 }
 
 .nav__inner {
