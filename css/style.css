@@ -646,19 +646,29 @@ em { font-style: italic; }
     background: rgba(9,8,11,0.97);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 100px 32px 56px;
-    gap: 32px;
+    padding: 88px 28px 48px;
+    gap: 0;
     z-index: 150;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: flex-start;
     overflow-y: auto;
   }
 
   .nav__links.open a {
-    font-size: 1.25rem;
-    letter-spacing: 0.06em;
-    color: var(--text);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: block;
+    transition: color 0.2s ease;
   }
+
+  .nav__links.open a:first-child { border-top: 1px solid var(--border); }
+  .nav__links.open a:hover,
+  .nav__links.open a.active { color: var(--gold); }
 
   .nav__hamburger { display: flex; z-index: 300; }
 
