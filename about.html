@@ -259,12 +259,18 @@
       .about-story__inner { grid-template-columns: 1fr; gap: 52px; }
       .about-story__pull { position: static; }
       .about-values__grid { grid-template-columns: 1fr; }
-      .about-value { border-right: none; border-bottom: 1px solid var(--border); }
+      .about-value { border-right: none; border-bottom: 1px solid var(--border); padding: 36px 28px; }
       .about-value:last-child { border-bottom: none; }
       .about-team__grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .about-cta__inner { padding: 56px 24px; }
+      .about-hero { padding-top: 120px; padding-bottom: 56px; }
+      .about-cta__inner { padding: 48px 20px; gap: 16px; }
+      .team-card { padding: 28px 22px; }
+      .team-card__photo { width: 60px; height: 60px; }
+      .team-card__name { font-size: 1.25rem; }
+      .about-story__quote { font-size: 1.3rem; }
+      .about-stat__num { font-size: 1.8rem; }
     }
   </style>
 </head>
@@ -276,10 +282,8 @@
       <a href="index.html" class="nav__logo">Velai</a>
       <nav class="nav__links" id="navLinks">
         <a href="index.html#how-it-works">How it works</a>
-        <a href="index.html#discovery-kit">Discovery Kit</a>
-        <a href="index.html#body-collection">Body Collection</a>
-        <a href="index.html#pricing">Shop</a>
-        <a href="about.html" class="active">About</a>
+        <a href="about.html" class="active">About us</a>
+        <a href="sustainability.html">Our product &amp; sustainability</a>
       </nav>
       <div class="nav__actions">
         <a href="quiz.html" class="btn btn--primary">Start the quiz</a>

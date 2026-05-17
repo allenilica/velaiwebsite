@@ -718,20 +718,56 @@
 }
 
 /* ─── Responsive ─────────────────────────────────────────────────────── */
+
 @media (max-width: 960px) {
   .path__grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
 }
 
 @media (max-width: 860px) {
-  .kit__inner { grid-template-columns: 1fr; gap: 52px; }
-  .kit-card { max-width: 420px; }
+  .kit__inner { grid-template-columns: 1fr; gap: 40px; }
+  .kit-card { max-width: 420px; margin: 0 auto; }
+  .kit-tray { max-width: 280px; }
   .kit-scene { max-width: 260px; }
   .testimonials__grid { grid-template-columns: 1fr; }
-  .body-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+  .body-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
 }
 
 @media (max-width: 640px) {
-  .final-cta__inner { padding: 64px 24px; }
-  .final-cta__reassurance { gap: 16px; }
+  /* Kit tray */
+  .kit-tray { max-width: 100%; padding: 36px 24px 22px; }
+  .kit-tray__vials { gap: 16px; }
+  .kit__copy { gap: 18px; }
+
+  /* Path cards */
+  .path__grid { max-width: 100%; }
+  .path-card { padding: 28px 22px; }
+  .path-card__desc { padding-bottom: 14px; }
+
+  /* Body */
+  .body-grid { max-width: 100%; }
+  .body-card__content { padding: 22px 22px 18px; }
+  .body-card__icon-wrap { height: 150px; }
+
+  /* Testimonials */
+  .testimonial-card { padding: 28px 22px; gap: 16px; }
+
+  /* Final CTA */
+  .final-cta__inner { padding: 56px 20px; gap: 16px; }
+  .final-cta__reassurance { gap: 14px; flex-direction: column; align-items: center; }
   .final-cta__reassurance li:not(:last-child)::after { display: none; }
+}
+
+@media (max-width: 480px) {
+  /* Size option rows */
+  .size-option { padding: 10px 12px; }
+  .size-option__price { font-size: 1.1rem; }
+
+  /* Kit vials slightly smaller */
+  .kit-vl__glass { width: 18px; }
+  .kit-vl--1 .kit-vl__glass, .kit-vl--3 .kit-vl__glass { height: 84px; }
+  .kit-vl--2 .kit-vl__glass { height: 110px; }
+  .kit-vl__cap { width: 18px; height: 28px; }
+  .kit-vl__collar { width: 20px; }
+  .kit-vl__foot { width: 22px; }
+  .kit-tray__vials { gap: 14px; }
 }
