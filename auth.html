@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Velai — Private Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #09080b;
+    --gold: #c9a96e;
+    --text: #e8e0d0;
+    --muted: rgba(232,224,208,0.45);
+    --border: rgba(201,169,110,0.18);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .glow {
+    position: fixed;
+    top: -200px; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 700px;
+    background: radial-gradient(ellipse at 50% 20%, rgba(201,169,110,0.10) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .corner {
+    position: fixed;
+    width: 44px; height: 44px;
+  }
+  .corner--tl { top: 32px; left: 32px; border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+  .corner--tr { top: 32px; right: 32px; border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+  .corner--bl { bottom: 32px; left: 32px; border-bottom: 1px solid var(--border); border-left: 1px solid var(--border); }
+  .corner--br { bottom: 32px; right: 32px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 56px 48px;
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .heading h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .heading p {
+    font-size: 0.82rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+
+  /* PIN dots display */
+  .pin-dots {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .pin-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.4);
+    background: transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .pin-dot.filled {
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: scale(1.1);
+  }
+
+  /* Keypad */
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .key {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    padding: 18px 0;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  .key:hover { border-color: var(--gold); color: var(--gold); }
+  .key:active { background: rgba(201,169,110,0.08); }
+
+  .key--empty { border-color: transparent; pointer-events: none; }
+
+  .key--del {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .key--del:hover { color: var(--text); border-color: rgba(201,169,110,0.3); }
+
+  /* Error shake */
+  .pin-dots.shake {
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-8px); }
+    40%       { transform: translateX(8px); }
+    60%       { transform: translateX(-6px); }
+    80%       { transform: translateX(6px); }
+  }
+
+  .error-msg {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: rgba(201,169,110,0.55);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    min-height: 1em;
+  }
+  .error-msg.visible { opacity: 1; }
+
+  @media (max-width: 480px) {
+    .card { padding: 40px 24px; gap: 28px; }
+    .key { padding: 16px 0; font-size: 1.35rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<div class="corner corner--tl"></div>
+<div class="corner corner--tr"></div>
+<div class="corner corner--bl"></div>
+<div class="corner corner--br"></div>
+
+<div class="card">
+  <div class="logo">Velai</div>
+
+  <div class="heading">
+    <h1>Private preview</h1>
+    <p>Enter your access code to continue</p>
+  </div>
+
+  <div class="pin-dots" id="pinDots">
+    <div class="pin-dot" id="d0"></div>
+    <div class="pin-dot" id="d1"></div>
+    <div class="pin-dot" id="d2"></div>
+    <div class="pin-dot" id="d3"></div>
+  </div>
+
+  <p class="error-msg" id="errorMsg">Incorrect code — try again</p>
+
+  <div class="keypad" id="keypad">
+    <button class="key" data-val="1">1</button>
+    <button class="key" data-val="2">2</button>
+    <button class="key" data-val="3">3</button>
+    <button class="key" data-val="4">4</button>
+    <button class="key" data-val="5">5</button>
+    <button class="key" data-val="6">6</button>
+    <button class="key" data-val="7">7</button>
+    <button class="key" data-val="8">8</button>
+    <button class="key" data-val="9">9</button>
+    <button class="key key--empty" aria-hidden="true"></button>
+    <button class="key" data-val="0">0</button>
+    <button class="key key--del" id="delKey">⌫</button>
+  </div>
+</div>
+
+<script>
+  const CODE = '3456';
+  let entered = '';
+
+  const dots = [
+    document.getElementById('d0'),
+    document.getElementById('d1'),
+    document.getElementById('d2'),
+    document.getElementById('d3'),
+  ];
+  const pinDots  = document.getElementById('pinDots');
+  const errorMsg = document.getElementById('errorMsg');
+
+  function updateDots() {
+    dots.forEach((d, i) => d.classList.toggle('filled', i < entered.length));
+  }
+
+  function showError() {
+    errorMsg.classList.add('visible');
+    pinDots.classList.add('shake');
+    pinDots.addEventListener('animationend', () => {
+      pinDots.classList.remove('shake');
+      entered = '';
+      updateDots();
+    }, { once: true });
+  }
+
+  function checkCode() {
+    if (entered === CODE) {
+      sessionStorage.setItem('velai_preview', '1');
+      const dest = sessionStorage.getItem('velai_return') || 'index.html';
+      sessionStorage.removeItem('velai_return');
+      window.location.href = dest;
+    } else {
+      showError();
+    }
+  }
+
+  document.getElementById('keypad').addEventListener('click', e => {
+    const key = e.target.closest('.key');
+    if (!key) return;
+    errorMsg.classList.remove('visible');
+
+    if (key.id === 'delKey') {
+      entered = entered.slice(0, -1);
+      updateDots();
+      return;
+    }
+
+    if (entered.length >= 4) return;
+    entered += key.dataset.val;
+    updateDots();
+
+    if (entered.length === 4) {
+      setTimeout(checkCode, 120);
+    }
+  });
+
+  // Also allow physical keyboard
+  document.addEventListener('keydown', e => {
+    errorMsg.classList.remove('visible');
+    if (e.key >= '0' && e.key <= '9' && entered.length < 4) {
+      entered += e.key;
+      updateDots();
+      if (entered.length === 4) setTimeout(checkCode, 120);
+    } else if (e.key === 'Backspace') {
+      entered = entered.slice(0, -1);
+      updateDots();
+    }
+  });
+</script>
+</body>
+</html>
