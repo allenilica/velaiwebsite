@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1080px; overflow: hidden;
+    background: #09080b;
+    font-family: 'Inter', sans-serif;
+    color: #e8e0d0;
+  }
+  .wrap { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; }
+
+  /* top half — visual */
+  .top {
+    flex: 1;
+    background: linear-gradient(180deg, rgba(201,169,110,0.07) 0%, rgba(9,8,11,0) 100%);
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .top-glow {
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse at 50% 10%, rgba(201,169,110,0.12) 0%, transparent 65%);
+  }
+  /* vials */
+  .vials { display: flex; align-items: flex-end; gap: 36px; position: relative; z-index: 1; }
+  .vl { display: flex; flex-direction: column; align-items: center; }
+  .vl__cap {
+    width: 28px; height: 52px;
+    background: linear-gradient(160deg, #d4af7a 0%, #9a7240 65%, #c9a060 100%);
+    border-radius: 3px 3px 0 0;
+    box-shadow: inset 1px 0 0 rgba(255,255,255,0.14), inset -1px 0 0 rgba(0,0,0,0.22);
+  }
+  .vl__collar { width: 32px; height: 4px; background: linear-gradient(90deg, #9a7240, #e0c070, #9a7240); }
+  .vl__glass {
+    width: 28px;
+    border: 1px solid rgba(201,169,110,0.25);
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    background: rgba(201,169,110,0.05);
+    overflow: hidden; position: relative;
+  }
+  .vl--1 .vl__glass, .vl--3 .vl__glass { height: 160px; }
+  .vl--2 .vl__glass { height: 210px; }
+  .vl__liquid {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    border-radius: 0 0 3px 3px;
+  }
+  .vl--1 .vl__liquid { height: 70%; background: linear-gradient(180deg, rgba(201,169,110,0.2), rgba(201,169,110,0.6)); }
+  .vl--2 .vl__liquid { height: 84%; background: linear-gradient(180deg, rgba(178,138,84,0.2), rgba(178,138,84,0.65)); }
+  .vl--3 .vl__liquid { height: 58%; background: linear-gradient(180deg, rgba(218,185,130,0.18), rgba(218,185,130,0.58)); }
+  .vl__shine { position: absolute; top: 0; left: 5px; width: 4px; height: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 55%); }
+  .vl__foot { width: 34px; height: 5px; background: linear-gradient(90deg, #9a7240, #d4af7a, #9a7240); }
+  .vl__num { margin-top: 16px; font-size: 11px; letter-spacing: 0.2em; color: #c9a96e; opacity: 0.6; font-family: 'Inter', sans-serif; }
+
+  /* bottom half — copy */
+  .bottom {
+    padding: 56px 80px 64px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: #c9a96e; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 60px; font-weight: 300; line-height: 1.1; }
+  h2 em { font-style: italic; color: #c9a96e; }
+  .desc { font-size: 17px; font-weight: 300; line-height: 1.75; color: rgba(232,224,208,0.55); max-width: 600px; }
+  .meta { display: flex; align-items: center; gap: 32px; margin-top: 4px; }
+  .meta-item { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(201,169,110,0.5); }
+  .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(201,169,110,0.3); }
+  .logo { position: absolute; top: 52px; left: 80px; font-family: 'Cormorant Garamond', serif; font-size: 24px; letter-spacing: 0.2em; text-transform: uppercase; color: #c9a96e; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">Velai</div>
+  <div class="top">
+    <div class="top-glow"></div>
+    <div class="vials">
+      <div class="vl vl--1">
+        <div class="vl__cap"></div><div class="vl__collar"></div>
+        <div class="vl__glass"><div class="vl__liquid"></div><div class="vl__shine"></div></div>
+        <div class="vl__foot"></div><span class="vl__num">01</span>
+      </div>
+      <div class="vl vl--2">
+        <div class="vl__cap"></div><div class="vl__collar"></div>
+        <div class="vl__glass"><div class="vl__liquid"></div><div class="vl__shine"></div></div>
+        <div class="vl__foot"></div><span class="vl__num">02</span>
+      </div>
+      <div class="vl vl--3">
+        <div class="vl__cap"></div><div class="vl__collar"></div>
+        <div class="vl__glass"><div class="vl__liquid"></div><div class="vl__shine"></div></div>
+        <div class="vl__foot"></div><span class="vl__num">03</span>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <p class="eyebrow">Discovery Kit</p>
+    <h2>Try before<br/>you <em>commit.</em></h2>
+    <p class="desc">Three AI-matched 2ml vials delivered to your door. Live with each scent for days before you decide which one is yours.</p>
+    <div class="meta">
+      <span class="meta-item">3 × 2ml vials</span>
+      <div class="meta-dot"></div>
+      <span class="meta-item">Ships in 3–5 days</span>
+      <div class="meta-dot"></div>
+      <span class="meta-item">velai.co.uk</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sustainability | Velai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <style>
+    /* ── Sustainability page ──────────────────────────────────────────── */
+    .sus-hero {
+      padding-top: 160px;
+      padding-bottom: 96px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sus-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 680px;
+      height: 420px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .sus-hero__inner { max-width: 740px; }
+    .sus-hero h1 {
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+    .sus-hero__lead {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 58ch;
+    }
+
+    /* ── Givaudan / Grasse section ────────────────────────────────────── */
+    .sus-orpur {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .sus-orpur__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .sus-orpur__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sus-orpur__copy p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+    .sus-orpur__copy p strong { color: var(--text); font-weight: 500; }
+    .sus-orpur__panel {
+      position: sticky;
+      top: 120px;
+    }
+    .sus-badge {
+      border: 1px solid var(--border-gold);
+      border-radius: var(--r-md);
+      padding: 36px 32px;
+      background: linear-gradient(160deg, rgba(201,169,110,0.06) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .sus-badge__label {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .sus-badge__name {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .sus-badge__name em { color: var(--gold); }
+    .sus-badge__divider {
+      height: 1px;
+      background: var(--border);
+    }
+    .sus-badge__attrs {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .sus-attr {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .sus-attr__label {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+    .sus-attr__val {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── "Natural is not enough" section ─────────────────────────────── */
+    .sus-natural__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .sus-natural__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sus-natural__copy p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+    .sus-natural__copy p strong { color: var(--text); font-weight: 500; }
+    .sus-compare {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sus-compare__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .sus-compare__cell {
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .sus-compare__cell--bad {
+      border-color: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+    }
+    .sus-compare__cell--good {
+      border-color: var(--border-gold);
+      background: rgba(201,169,110,0.04);
+    }
+    .sus-compare__eyebrow {
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .sus-compare__eyebrow--bad  { color: var(--muted); opacity: 0.6; }
+    .sus-compare__eyebrow--good { color: var(--gold); }
+    .sus-compare__cell h4 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .sus-compare__cell p {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    /* ── Packaging section ────────────────────────────────────────────── */
+    .sus-packaging {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .sus-pkg__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .sus-pkg-item {
+      padding: 52px 40px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sus-pkg-item:last-child { border-right: none; }
+    .sus-pkg-item__num {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .sus-pkg-item__icon {
+      font-size: 1.4rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .sus-pkg-item h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+    .sus-pkg-item p {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    /* ── EU manufacturing ─────────────────────────────────────────────── */
+    .sus-eu__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .sus-eu__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sus-eu__copy p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+    .sus-eu__copy p strong { color: var(--text); font-weight: 500; }
+    .sus-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .sus-pillar {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sus-pillar:first-child { padding-top: 0; }
+    .sus-pillar:last-child  { border-bottom: none; padding-bottom: 0; }
+    .sus-pillar__icon {
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+    .sus-pillar div { display: flex; flex-direction: column; gap: 4px; }
+    .sus-pillar h4 { font-size: 0.88rem; font-weight: 600; }
+    .sus-pillar p  { font-size: 0.84rem; }
+
+    /* ── B Corp ───────────────────────────────────────────────────────── */
+    .sus-bcorp {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .sus-bcorp__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .sus-bcorp__copy {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sus-bcorp__copy p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+    .sus-bcorp__copy p strong { color: var(--text); font-weight: 500; }
+    .sus-bcorp__badge {
+      border: 1px solid var(--border-gold);
+      border-radius: var(--r-lg);
+      padding: 56px 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      background: linear-gradient(160deg, rgba(201,169,110,0.05) 0%, transparent 60%);
+    }
+    .sus-bcorp__badge-mark {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .sus-bcorp__badge-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      max-width: 24ch;
+      line-height: 1.6;
+    }
+    .sus-bcorp__badge-note {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ── CTA ──────────────────────────────────────────────────────────── */
+    .sus-cta__inner {
+      border: 1px solid var(--border-gold);
+      border-radius: var(--r-lg);
+      padding: 80px 48px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background: linear-gradient(160deg, rgba(201,169,110,0.05) 0%, transparent 60%);
+    }
+    .sus-cta__inner p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 48ch;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .sus-orpur__inner,
+      .sus-natural__inner,
+      .sus-eu__inner,
+      .sus-bcorp__inner  { grid-template-columns: 1fr; gap: 52px; }
+      .sus-orpur__panel  { position: static; }
+      .sus-pkg__grid     { grid-template-columns: 1fr; }
+      .sus-pkg-item      { border-right: none; border-bottom: 1px solid var(--border); }
+      .sus-pkg-item:last-child { border-bottom: none; }
+    }
+    @media (max-width: 640px) {
+      .sus-cta__inner { padding: 56px 24px; }
+      .sus-compare__row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__logo">Velai</a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html#how-it-works">How it works</a>
+        <a href="index.html#discovery-kit">Discovery Kit</a>
+        <a href="index.html#body-collection">Body Collection</a>
+        <a href="index.html#pricing">Shop</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="quiz.html" class="btn btn--primary">Start the quiz</a>
+      </div>
+      <button class="nav__hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="sus-hero">
+      <div class="container sus-hero__inner">
+        <p class="eyebrow reveal-hero">Our commitment</p>
+        <h1 class="reveal-hero">Made well.<br /><em>For the long run.</em></h1>
+        <p class="sus-hero__lead reveal-hero">
+          Sustainability at Velai isn't a marketing position. It's the standard we hold
+          our ingredients, our packaging, and our people to every day. Here's exactly what
+          that means.
+        </p>
+      </div>
+    </section>
+
+    <!-- GIVAUDAN ORPUR -->
+    <section class="sus-orpur section">
+      <div class="container sus-orpur__inner">
+
+        <div class="sus-orpur__copy reveal">
+          <p class="eyebrow">Ingredient sourcing</p>
+          <h2>Grasse. Our atelier.<br /><em>Givaudan Orpur.</em></h2>
+          <p>
+            Every Velai fragrance is composed and produced in <strong>Grasse, in the south of France</strong>,
+            the birthplace of modern perfumery, home to the finest raw materials in the world.
+            Our small atelier sits at the heart of this tradition, working with master perfumers
+            who have spent careers in this landscape.
+          </p>
+          <p>
+            Our ingredient standard is Givaudan's <strong>Orpur programme</strong>, the most rigorous
+            traceability and quality certification in the fragrance industry. Every raw material
+            we source carries a full chain of custody: from the farm or distillery, through to
+            the ingredient supplier, through to us. You know exactly what you're wearing,
+            and where it came from.
+          </p>
+          <p>
+            Orpur ingredients are tested not just for purity but for socio-environmental
+            impact across their entire supply chain. Farmers are paid fairly. Extraction
+            methods are audited. The communities that grow our ingredients benefit from
+            the relationship, not just the buyer at the end of it.
+          </p>
+        </div>
+
+        <div class="sus-orpur__panel reveal">
+          <div class="sus-badge">
+            <span class="sus-badge__label">Our ingredient standard</span>
+            <div class="sus-badge__name">Givaudan<br /><em>Orpur&trade;</em></div>
+            <div class="sus-badge__divider"></div>
+            <div class="sus-badge__attrs">
+              <div class="sus-attr">
+                <span class="sus-attr__label">Certification</span>
+                <span class="sus-attr__val">Full supply chain traceability, farm to vial</span>
+              </div>
+              <div class="sus-attr">
+                <span class="sus-attr__label">Produced in</span>
+                <span class="sus-attr__val">Grasse, Alpes-Maritimes, France</span>
+              </div>
+              <div class="sus-attr">
+                <span class="sus-attr__label">Standard</span>
+                <span class="sus-attr__val">Socio-environmental audit at every stage of the supply chain</span>
+              </div>
+              <div class="sus-attr">
+                <span class="sus-attr__label">Why it matters</span>
+                <span class="sus-attr__val">The industry's most transparent ingredient programme. Nothing is hidden.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- THE NATURAL MYTH -->
+    <section class="section">
+      <div class="container sus-natural__inner">
+
+        <div class="sus-natural__copy reveal">
+          <p class="eyebrow">The science</p>
+          <h2>Natural isn't always<br /><em>better for your skin.</em></h2>
+          <p>
+            One of the most persistent myths in fragrance is that "natural" means safe, and
+            "synthetic" means harmful. The evidence says otherwise, and we think you deserve
+            to know the difference.
+          </p>
+          <p>
+            <strong>Citrus essential oils</strong>, beloved for their fresh, clean profile,
+            are among the most common causes of skin sensitisation and phototoxicity in
+            conventional perfumery. Cold-pressed bergamot, lemon, and lime oil contain
+            furanocoumarins that can cause lasting pigmentation changes when skin is exposed
+            to UV light after application. Some natural oakmoss and tree-moss extracts carry
+            atranol, a potent allergen regulated by the IFRA for exactly this reason.
+          </p>
+          <p>
+            At Velai, we use the <strong>strongest, most skin-friendly variants</strong> available,
+            including ISO-certified aroma chemicals and precisely dosed naturals that deliver
+            the same olfactory experience without the sensitisation risk. Where a competitor
+            like FFern leads with "100% natural" as a virtue, we lead with what the science
+            actually supports: the right ingredient, in the right concentration, tested for
+            your skin.
+          </p>
+          <p>
+            This isn't a compromise on quality. It's what quality actually means.
+          </p>
+        </div>
+
+        <div class="sus-compare reveal">
+          <p class="eyebrow" style="margin-bottom: 20px;">Side by side</p>
+          <div class="sus-compare__row">
+            <div class="sus-compare__cell sus-compare__cell--bad">
+              <span class="sus-compare__eyebrow sus-compare__eyebrow--bad">The "natural" claim</span>
+              <h4>Cold-pressed citrus oils</h4>
+              <p>Contain furanocoumarins. Phototoxic on sun-exposed skin. Common trigger for sensitisation and pigmentation.</p>
+            </div>
+            <div class="sus-compare__cell sus-compare__cell--good">
+              <span class="sus-compare__eyebrow sus-compare__eyebrow--good">The Velai standard</span>
+              <h4>Bergapten-free &amp; ISO variants</h4>
+              <p>Same fresh citrus lift. Zero phototoxic compounds. Safe across all skin types, all conditions.</p>
+            </div>
+          </div>
+          <div class="sus-compare__row">
+            <div class="sus-compare__cell sus-compare__cell--bad">
+              <span class="sus-compare__eyebrow sus-compare__eyebrow--bad">The "natural" claim</span>
+              <h4>Natural oakmoss &amp; treemoss</h4>
+              <p>Contain atranol, a potent allergen regulated and restricted by IFRA due to widespread sensitisation.</p>
+            </div>
+            <div class="sus-compare__cell sus-compare__cell--good">
+              <span class="sus-compare__eyebrow sus-compare__eyebrow--good">The Velai standard</span>
+              <h4>Evernyl-free moss materials</h4>
+              <p>Deep, earthy complexity preserved. Allergen profile eliminated. IFRA compliant at every usage level.</p>
+            </div>
+          </div>
+          <div class="sus-compare__row">
+            <div class="sus-compare__cell sus-compare__cell--bad">
+              <span class="sus-compare__eyebrow sus-compare__eyebrow--bad">The "natural" claim</span>
+              <h4>Unregulated "natural" sourcing</h4>
+              <p>No chain of custody. Batch inconsistency. Environmental and labour practices often unverified.</p>
+            </div>
+            <div class="sus-compare__cell sus-compare__cell--good">
+              <span class="sus-compare__eyebrow sus-compare__eyebrow--good">The Velai standard</span>
+              <h4>Givaudan Orpur&trade; certification</h4>
+              <p>Full traceability from farm to vial. Every batch audited. Every supplier held to a social and environmental standard.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PACKAGING -->
+    <section class="sus-packaging section">
+      <div class="container">
+        <div class="section__header reveal">
+          <p class="eyebrow">Packaging</p>
+          <h2>Nothing wasted.<br /><em>Everything considered.</em></h2>
+          <p class="section__desc">
+            We designed our packaging around one rule: if it can't be reused, recycled,
+            or responsibly sourced, it doesn't belong in a Velai box.
+          </p>
+        </div>
+        <div class="sus-pkg__grid">
+
+          <div class="sus-pkg-item reveal" style="--d:0ms">
+            <span class="sus-pkg-item__num">01</span>
+            <span class="sus-pkg-item__icon" aria-hidden="true">&#9671;</span>
+            <h3>Leather vial holders</h3>
+            <p>
+              Your Discovery Kit vials sit in individually stitched leather cradles,
+              made by local artisans in the Grasse region. Vegetable-tanned, durable,
+              and designed to last for years, not to be thrown away after one unboxing.
+              This is your keepsake, not your waste.
+            </p>
+          </div>
+
+          <div class="sus-pkg-item reveal" style="--d:120ms">
+            <span class="sus-pkg-item__num">02</span>
+            <span class="sus-pkg-item__icon" aria-hidden="true">&#9711;</span>
+            <h3>Recycled glass throughout</h3>
+            <p>
+              Every vial, every bottle we produce is made from recycled glass,
+              the most inert and recyclable packaging material available.
+              Our full 50ml bottles are designed to be refilled indefinitely.
+              When a glass vial reaches end of life, it goes back into the recycling stream
+              without degradation in quality.
+            </p>
+          </div>
+
+          <div class="sus-pkg-item reveal" style="--d:240ms">
+            <span class="sus-pkg-item__num">03</span>
+            <span class="sus-pkg-item__icon" aria-hidden="true">&#9650;</span>
+            <h3>Minimal, recyclable outer packaging</h3>
+            <p>
+              Our shipping materials are FSC-certified card and recycled paper with no
+              single-use plastics and no foam inserts. The outer box is printed with
+              soy-based inks and is fully recyclable kerbside. We removed every
+              element that served aesthetics over the environment.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EU MANUFACTURING & ETHICS -->
+    <section class="section">
+      <div class="container sus-eu__inner">
+
+        <div class="sus-eu__copy reveal">
+          <p class="eyebrow">Where we make it</p>
+          <h2>Proudly manufacturing<br /><em>in the European Union.</em></h2>
+          <p>
+            Every Velai fragrance is produced in France, subject to the most stringent
+            environmental and labour regulations in the world. EU manufacturing means
+            <strong>clean production standards, fair wages, and no race to the bottom</strong> on costs.
+          </p>
+          <p>
+            Our atelier in Grasse employs locally. The people who compound your fragrance
+            are from the region, many with family ties to the perfumery industry that stretch
+            back generations. We pay above the local market rate and we don't use agency
+            workers or seasonal labour to keep costs down.
+          </p>
+          <p>
+            This is a deliberate choice. Manufacturing locally costs more. We believe it
+            costs less than the alternative.
+          </p>
+        </div>
+
+        <div class="sus-pillars reveal">
+          <div class="sus-pillar">
+            <span class="sus-pillar__icon" aria-hidden="true">&#9679;</span>
+            <div>
+              <h4>EU production standards</h4>
+              <p>REACH compliance, strict wastewater regulation, and energy efficiency requirements that no offshore alternative meets.</p>
+            </div>
+          </div>
+          <div class="sus-pillar">
+            <span class="sus-pillar__icon" aria-hidden="true">&#9711;</span>
+            <div>
+              <h4>Local hiring in Grasse</h4>
+              <p>We recruit from the community around our atelier. Every role filled locally supports a region that has been at the centre of perfumery for five centuries.</p>
+            </div>
+          </div>
+          <div class="sus-pillar">
+            <span class="sus-pillar__icon" aria-hidden="true">&#9650;</span>
+            <div>
+              <h4>Ethical supply chain</h4>
+              <p>Givaudan Orpur certification covers our upstream suppliers too. Fair pricing, no coercive contracts, and third-party audits at every tier.</p>
+            </div>
+          </div>
+          <div class="sus-pillar">
+            <span class="sus-pillar__icon" aria-hidden="true">&#9670;</span>
+            <div>
+              <h4>No greenwashing</h4>
+              <p>We don't claim carbon neutrality through offset schemes or print vague pledges on our packaging. Every commitment here is operational and verifiable today.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- B CORP -->
+    <section class="sus-bcorp section">
+      <div class="container sus-bcorp__inner">
+
+        <div class="sus-bcorp__copy reveal">
+          <p class="eyebrow">The road ahead</p>
+          <h2>We are working toward<br /><em>B Corp certification.</em></h2>
+          <p>
+            B Corp certification is the most rigorous third-party standard for social and
+            environmental performance in business. We are actively working through the
+            assessment, measuring our impact across governance, workers, community,
+            environment, and customers.
+          </p>
+          <p>
+            We don't have the certification yet. We won't say we do. But <strong>every
+            operational decision we make is shaped by the standard we intend to meet</strong>,
+            from how we hire to how we source to how we package.
+          </p>
+          <p>
+            When we certify, it won't be a rebrand. It will simply be confirmation
+            of what we've been doing from the start.
+          </p>
+        </div>
+
+        <div class="sus-bcorp__badge reveal">
+          <div class="sus-bcorp__badge-mark">B</div>
+          <span class="sus-bcorp__badge-label">Pursuing B Corp certification, in progress</span>
+          <div class="sus-bcorp__badge-note">
+            We are working toward verification across all five B Impact Assessment categories.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="sus-cta__inner reveal">
+          <p class="eyebrow">Wear it well</p>
+          <h2>A fragrance you can feel good about.</h2>
+          <p>
+            Ingredients you can trace. Packaging designed to last. Made in France,
+            by people paid fairly to make it. Your scent shouldn't cost the world,
+            and with Velai, it won't.
+          </p>
+          <a href="quiz.html" class="btn btn--primary btn--lg">Find your fragrance</a>
+          <a href="about.html" class="btn btn--ghost">Read our story</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">Velai</a>
+        <p class="footer__tagline"><em>"A fragrance that fits your life. Forever."</em></p>
+        <p class="footer__crafted">Crafted by Guerlain-trained perfumers &middot; Powered by AI</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>Shop</h4>
+          <a href="index.html#discovery-kit">Discovery Kit</a>
+          <a href="index.html#pricing">Full Bottles</a>
+          <a href="index.html#pricing">Subscription</a>
+          <a href="index.html#body-collection">Body Collection</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="about.html">Our story</a>
+          <a href="sustainability.html" class="active">Sustainability</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+        </div>
+        <div class="footer__col">
+          <h4>Support</h4>
+          <a href="index.html#how-it-works">How it works</a>
+          <a href="#">FAQ</a>
+          <a href="#">Contact us</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>&copy; 2026 Velai. All rights reserved.</p>
+      <div class="footer__legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

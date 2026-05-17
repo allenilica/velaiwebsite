@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story | Velai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <style>
+    /* ── About page specific ──────────────────────────────────────────── */
+    .about-hero {
+      padding-top: 160px;
+      padding-bottom: 96px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .about-hero__inner {
+      max-width: 720px;
+    }
+    .about-hero h1 {
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      line-height: 1.12;
+      margin-top: 16px;
+      margin-bottom: 24px;
+    }
+    .about-hero__lead {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 58ch;
+    }
+
+    /* ── Origin story ─────────────────────────────────────────────────── */
+    .about-story__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-story__text {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .about-story__text p {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+    .about-story__text p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .about-story__pull {
+      position: sticky;
+      top: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .about-story__quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      color: var(--text);
+      border-left: 2px solid var(--gold);
+      padding-left: 28px;
+    }
+    .about-story__quote-attr {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-left: 28px;
+    }
+    .about-story__stat-row {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+    .about-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .about-stat__num {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .about-stat__label {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Values strip ─────────────────────────────────────────────────── */
+    .about-values {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-values__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .about-value {
+      padding: 48px 40px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .about-value:last-child { border-right: none; }
+    .about-value__num {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .about-value h3 {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+    .about-value p {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    /* ── Team ─────────────────────────────────────────────────────────── */
+    .about-team__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .team-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: border-color 0.3s ease, transform 0.25s var(--ease-out);
+    }
+    .team-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-3px);
+    }
+    .team-card__header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .team-card__photo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 1px solid var(--border-gold);
+      flex-shrink: 0;
+      filter: grayscale(20%);
+      transition: filter 0.3s ease;
+    }
+    .team-card:hover .team-card__photo { filter: grayscale(0%); }
+    .team-card__header-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .team-card__name {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+    .team-card__title {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .team-card__bio {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .team-card__details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .team-card__detail-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .team-card__detail-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+    .team-card__detail-val {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* ── About CTA ────────────────────────────────────────────────────── */
+    .about-cta__inner {
+      border: 1px solid var(--border-gold);
+      border-radius: var(--r-lg);
+      padding: 80px 48px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background: linear-gradient(160deg, rgba(201,169,110,0.05) 0%, transparent 60%);
+    }
+    .about-cta__inner p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 48ch;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .about-story__inner { grid-template-columns: 1fr; gap: 52px; }
+      .about-story__pull { position: static; }
+      .about-values__grid { grid-template-columns: 1fr; }
+      .about-value { border-right: none; border-bottom: 1px solid var(--border); }
+      .about-value:last-child { border-bottom: none; }
+      .about-team__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .about-cta__inner { padding: 56px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__logo">Velai</a>
+      <nav class="nav__links" id="navLinks">
+        <a href="index.html#how-it-works">How it works</a>
+        <a href="index.html#discovery-kit">Discovery Kit</a>
+        <a href="index.html#body-collection">Body Collection</a>
+        <a href="index.html#pricing">Shop</a>
+        <a href="about.html" class="active">About</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="quiz.html" class="btn btn--primary">Start the quiz</a>
+      </div>
+      <button class="nav__hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="about-hero">
+      <div class="container about-hero__inner">
+        <p class="eyebrow reveal-hero">Our story</p>
+        <h1 class="reveal-hero">Built by someone who was<br /><em>tired of settling.</em></h1>
+        <p class="about-hero__lead reveal-hero">
+          Velai started with a simple frustration: fragrance, one of the most personal
+          things you wear, was still a guessing game. We decided to fix that.
+        </p>
+      </div>
+    </section>
+
+    <!-- ORIGIN STORY -->
+    <section class="section">
+      <div class="container about-story__inner">
+
+        <div class="about-story__text reveal">
+          <p>
+            <strong>Allen spent his career as a management consultant</strong>, working across
+            strategy and financial advisory at Monitor Deloitte, Kearney, and Jane Street.
+            Analytical by profession, obsessive about scent by nature.
+          </p>
+          <p>
+            The problem was always the same. He'd walk into a department store, spray ten
+            things on his arm, leave overwhelmed, and usually buy something familiar just
+            to escape the experience. Then the bottle would sit on a shelf, slightly wrong,
+            slightly disappointing. <strong>Too expensive to ignore, too mediocre to love.</strong>
+          </p>
+          <p>
+            The online alternatives weren't better. Generic quiz tools gave generic answers.
+            Niche houses charged eye-watering prices for bottles you couldn't try first.
+            And none of them used the signals that actually predict taste: your personality,
+            your lifestyle, the music you listen to, the aesthetic you follow.
+          </p>
+          <p>
+            <strong>So he stopped looking for the right fragrance and started building it.</strong>
+            He called Zak. They started sketching out what a properly data-driven, truly
+            personalised fragrance brand could look like. Within weeks, the team had grown
+            to include Andra and Maria, and Velai was born.
+          </p>
+          <p>
+            The brief was simple: make fragrance feel like it was made for you, because
+            it actually was. Crafted by Guerlain-trained perfumers in France. Matched by AI.
+            Delivered to your door at a price that doesn't require justification.
+          </p>
+        </div>
+
+        <div class="about-story__pull reveal">
+          <blockquote class="about-story__quote">
+            "I was fed up with paying luxury prices for something that never quite
+            felt like mine."
+          </blockquote>
+          <p class="about-story__quote-attr">Allen Ilica, Cofounder &amp; CEO</p>
+
+          <div class="about-story__stat-row">
+            <div class="about-stat">
+              <span class="about-stat__num">51%</span>
+              <span class="about-stat__label">of UK consumers now prioritise uniqueness over cost when selecting a fragrance</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__num">87%</span>
+              <span class="about-stat__label">of UK consumers make frequent beauty purchases online</span>
+            </div>
+            <div class="about-stat">
+              <span class="about-stat__num">30%</span>
+              <span class="about-stat__label">of UK consumers purchase dupes for niche fragrances. Demand exists, access doesn't.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="about-values">
+      <div class="container">
+        <div class="about-values__grid">
+          <div class="about-value reveal">
+            <span class="about-value__num">01</span>
+            <h3>Scent is personal.<br />Not a guess.</h3>
+            <p>
+              Every person's fragrance profile is shaped by personality, memory, lifestyle,
+              and aesthetic. We use multi-source data to uncover it, not generic quiz logic.
+            </p>
+          </div>
+          <div class="about-value reveal">
+            <span class="about-value__num">02</span>
+            <h3>Luxury shouldn't need a department store.</h3>
+            <p>
+              Our fragrances are crafted by Guerlain-trained perfumers in France. The same
+              heritage, without the markups, the fluorescent lighting, or the hard sell.
+            </p>
+          </div>
+          <div class="about-value reveal">
+            <span class="about-value__num">03</span>
+            <h3>Try it first.<br />Commit after.</h3>
+            <p>
+              We send you three 2ml vials matched to your profile. Live with each one.
+              Only when you know it's right do you order the full bottle.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section">
+      <div class="container">
+        <div class="section__header reveal">
+          <p class="eyebrow">The team</p>
+          <h2>Four people. One obsession.</h2>
+          <p class="section__desc">
+            We come from consulting, engineering, marketing, and strategy.
+            What brought us together was the same frustration and the belief
+            that fragrance could be done properly.
+          </p>
+        </div>
+
+        <div class="about-team__grid">
+
+          <div class="team-card reveal" style="--d:0ms">
+            <div class="team-card__header">
+              <img src="img/team/allen.jpg" alt="Allen Ilica" class="team-card__photo" />
+              <div class="team-card__header-text">
+                <span class="team-card__title">Cofounder &amp; CEO</span>
+                <h3 class="team-card__name">Allen Ilica</h3>
+              </div>
+            </div>
+            <p class="team-card__bio">
+              "I spent years as a consultant helping companies make better decisions with data.
+              Then I turned that lens on the one industry that still relied entirely on luck,
+              and built Velai."
+            </p>
+            <div class="team-card__details">
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Education</span>
+                <span class="team-card__detail-val">BSc Computer Science &amp; Business Management, University College London</span>
+              </div>
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Previously</span>
+                <span class="team-card__detail-val">Monitor Deloitte &middot; Kearney &middot; Jane Street</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-card reveal" style="--d:100ms">
+            <div class="team-card__header">
+              <img src="img/team/zak.jpg" alt="Zak Davydov" class="team-card__photo" />
+              <div class="team-card__header-text">
+                <span class="team-card__title">Cofounder &amp; CTO</span>
+                <h3 class="team-card__name">Zak Davydov</h3>
+              </div>
+            </div>
+            <p class="team-card__bio">
+              "When Allen showed me the problem, I saw it immediately: a category drowning
+              in data it wasn't collecting. Building the AI layer was the most interesting
+              engineering challenge I'd seen."
+            </p>
+            <div class="team-card__details">
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Education</span>
+                <span class="team-card__detail-val">BSc Computer Science, University College London</span>
+              </div>
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Previously</span>
+                <span class="team-card__detail-val">Apple &middot; ellie.ai</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-card reveal" style="--d:200ms">
+            <div class="team-card__header">
+              <img src="img/team/andra.jpg" alt="Andra Pasc" class="team-card__photo" />
+              <div class="team-card__header-text">
+                <span class="team-card__title">Chief Marketing Officer</span>
+                <h3 class="team-card__name">Andra Pasc</h3>
+              </div>
+            </div>
+            <p class="team-card__bio">
+              "Fragrance marketing has always been beautiful and completely meaningless.
+              At Velai we have something real to say, a product that's genuinely personal.
+              That's a marketer's dream."
+            </p>
+            <div class="team-card__details">
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Education</span>
+                <span class="team-card__detail-val">BSc Computer Science &amp; Business Management, UCL &middot; MSc Strategic Marketing, Imperial College Business School</span>
+              </div>
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Previously</span>
+                <span class="team-card__detail-val">fjor</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-card reveal" style="--d:300ms">
+            <div class="team-card__header">
+              <img src="img/team/maria.jpg" alt="Maria Predescu" class="team-card__photo" />
+              <div class="team-card__header-text">
+                <span class="team-card__title">Founders Associate</span>
+                <h3 class="team-card__name">Maria Predescu</h3>
+              </div>
+            </div>
+            <p class="team-card__bio">
+              "I joined because I believed in the product before anyone had built it.
+              My job is to make sure nothing slips through the cracks, from operations
+              to strategy to whatever needs doing today."
+            </p>
+            <div class="team-card__details">
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Education</span>
+                <span class="team-card__detail-val">BSc Business Administration, Rotterdam School of Management &middot; MSc Strategic Management, Rotterdam School of Management</span>
+              </div>
+              <div class="team-card__detail-row">
+                <span class="team-card__detail-label">Previously</span>
+                <span class="team-card__detail-val">BCG &middot; Eichholtz</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="about-cta__inner reveal">
+          <p class="eyebrow">Ready to find yours?</p>
+          <h2>Your fragrance is waiting.</h2>
+          <p>
+            Two minutes. Three vials. One scent that is entirely, permanently yours.
+            That's what we built Velai for.
+          </p>
+          <a href="quiz.html" class="btn btn--primary btn--lg">Start the quiz</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">Velai</a>
+        <p class="footer__tagline"><em>"A fragrance that fits your life. Forever."</em></p>
+        <p class="footer__crafted">Crafted by Guerlain-trained perfumers &middot; Powered by AI</p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>Shop</h4>
+          <a href="index.html#discovery-kit">Discovery Kit</a>
+          <a href="index.html#pricing">Full Bottles</a>
+          <a href="index.html#pricing">Subscription</a>
+          <a href="index.html#body-collection">Body Collection</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="about.html">Our story</a>
+          <a href="sustainability.html">Sustainability</a>
+          <a href="#">Careers</a>
+          <a href="#">Press</a>
+        </div>
+        <div class="footer__col">
+          <h4>Support</h4>
+          <a href="index.html#how-it-works">How it works</a>
+          <a href="#">FAQ</a>
+          <a href="#">Contact us</a>
+        </div>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p>&copy; 2026 Velai. All rights reserved.</p>
+      <div class="footer__legal">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

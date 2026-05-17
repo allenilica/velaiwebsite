@@ -1,0 +1,1124 @@
+/* ─── Variables (shared with main site) ─────────────────────────────── */
+:root {
+  --bg:          #09080b;
+  --surface:     #111018;
+  --surface-2:   #181620;
+  --border:      rgba(255,255,255,0.07);
+  --border-gold: rgba(201,169,110,0.22);
+  --text:        #f0ebe3;
+  --muted:       #8a8490;
+  --gold:        #c9a96e;
+  --gold-light:  #dfc28e;
+  --gold-dim:    rgba(201,169,110,0.10);
+  --error:       #e87070;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+
+  --r-sm: 4px;
+  --r-md: 12px;
+  --r-lg: 20px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t:    0.22s ease;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+button { font-family: var(--sans); cursor: pointer; border: none; background: none; }
+input  { font-family: var(--sans); }
+
+/* ─── Shell ──────────────────────────────────────────────────────────── */
+.qs {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+/* ─── Nav ────────────────────────────────────────────────────────────── */
+.qs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 64px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(9,8,11,0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  gap: 24px;
+}
+
+.qs-logo {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.qs-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 6px 0;
+  transition: color var(--t);
+  flex-shrink: 0;
+  min-width: 52px;
+  justify-content: flex-end;
+}
+.qs-back:hover { color: var(--text); }
+.qs-back[hidden] { visibility: hidden; pointer-events: none; }
+
+/* ─── Progress bar ───────────────────────────────────────────────────── */
+.qs-progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.qp-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.qp-phase:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(50% + 12px);
+  top: 8px;
+  width: calc(100% - 4px);
+  height: 1px;
+  background: var(--border);
+  transition: background 0.4s ease;
+}
+.qp-phase.done:not(:last-child)::after { background: var(--border-gold); }
+
+.qp-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  transition: all 0.35s var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qp-dot svg { display: none; }
+
+.qp-phase.done   .qp-dot {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.qp-phase.done .qp-dot svg { display: block; }
+.qp-phase.active .qp-dot {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.12);
+}
+
+.qp-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+.qp-phase.active .qp-label,
+.qp-phase.done   .qp-label { color: var(--gold); }
+
+/* ─── Main content area ──────────────────────────────────────────────── */
+.qs-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px 64px;
+  position: relative;
+}
+
+/* ─── Step transitions ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .qs-main.exit-fwd  { animation: exitFwd  0.18s ease forwards; }
+  .qs-main.exit-back { animation: exitBack 0.18s ease forwards; }
+  .qs-main.enter-fwd { animation: enterFwd 0.3s var(--ease) forwards; }
+  .qs-main.enter-back{ animation: enterBack 0.3s var(--ease) forwards; }
+
+  @keyframes exitFwd  { to { opacity:0; transform:translateX(-20px); } }
+  @keyframes exitBack { to { opacity:0; transform:translateX(20px);  } }
+  @keyframes enterFwd { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:none; } }
+  @keyframes enterBack{ from { opacity:0; transform:translateX(-24px);} to { opacity:1; transform:none; } }
+}
+
+/* ─── Shared step wrapper ────────────────────────────────────────────── */
+.qstep {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.qstep--wide  { max-width: 880px; }
+.qstep--full  { max-width: 960px; }
+.qstep--center { align-items: center; text-align: center; }
+
+/* ─── Typography helpers ─────────────────────────────────────────────── */
+.q-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.q-h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.q-h1 em { font-style: italic; color: var(--gold); }
+
+.q-h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.q-h2 em { font-style: italic; color: var(--gold); }
+
+.q-body {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 48ch;
+}
+
+.q-body + .q-body { margin-top: 12px; }
+
+/* ─── Buttons ────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--r-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: all var(--t);
+  white-space: nowrap;
+}
+
+.btn--gold {
+  background: var(--gold);
+  color: #09080b;
+}
+.btn--gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(201,169,110,0.28);
+}
+.btn--gold:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+.btn--ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+.btn--lg { padding: 16px 40px; font-size: 0.82rem; }
+.btn--full { width: 100%; }
+
+.q-skip {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color var(--t);
+  text-align: center;
+}
+.q-skip:hover { color: var(--text); }
+
+/* ─── STEP 0: Welcome ────────────────────────────────────────────────── */
+.welcome-hero { margin-bottom: 36px; }
+
+.welcome-meta {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.welcome-meta span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.welcome-meta span::before {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--border-gold);
+  display: block;
+}
+
+/* ─── STEP 1: Auth ───────────────────────────────────────────────────── */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 11px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--t);
+}
+.auth-tab.active {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.q-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.q-field label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.q-field input {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--t);
+  caret-color: var(--gold);
+}
+.q-field input::placeholder { color: var(--muted); }
+.q-field input:focus { border-color: var(--border-gold); }
+.q-field input.error { border-color: var(--error); }
+
+.q-field-error {
+  font-size: 0.73rem;
+  color: var(--error);
+  min-height: 16px;
+}
+
+.auth-divider {
+  text-align: center;
+  margin: 20px 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  position: relative;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: calc(50% - 24px);
+  height: 1px;
+  background: var(--border);
+}
+.auth-divider::before { left: 0; }
+.auth-divider::after  { right: 0; }
+
+.auth-terms {
+  font-size: 0.73rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+.auth-terms a { color: var(--gold); }
+.auth-terms a:hover { text-decoration: underline; }
+
+/* ─── STEP 2: Quiz intro ─────────────────────────────────────────────── */
+.qintro-phases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 32px 0 40px;
+}
+
+.qintro-phase {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.qintro-phase__num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--border-gold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.qintro-phase__body h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.qintro-phase__body p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ─── STEPS 3–10: Personality questions ─────────────────────────────── */
+.q-qnum {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.q-qnum-bar {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  border-radius: 1px;
+  max-width: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.q-qnum-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  background: var(--gold);
+  border-radius: 1px;
+  transition: width 0.4s var(--ease);
+}
+
+.q-question {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 36px;
+  max-width: 20ch;
+}
+
+.q-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.q-choice {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 28px 24px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s var(--ease);
+}
+.q-choice:hover {
+  border-color: var(--border-gold);
+  background: var(--surface-2);
+  transform: translateY(-2px);
+}
+.q-choice:active { transform: scale(0.98); }
+.q-choice.selected {
+  border-color: var(--gold);
+  background: rgba(201,169,110,0.08);
+}
+
+.q-choice__text {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.q-choice__sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ─── STEP 11: Demographics ──────────────────────────────────────────── */
+.q-pill-section { margin-bottom: 28px; }
+
+.q-pill-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.q-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.q-pill {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.83rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all var(--t);
+}
+.q-pill:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+.q-pill.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+  color: var(--gold);
+}
+
+.q-demo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ─── STEP 12: Scent preferences ─────────────────────────────────────── */
+.q-scent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 28px 0 36px;
+}
+
+.q-scent-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 24px 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+.q-scent-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-2px);
+}
+.q-scent-card.selected {
+  border-color: var(--gold);
+  background: rgba(201,169,110,0.07);
+}
+
+.q-scent-card__icon {
+  font-size: 1.1rem;
+  color: var(--gold);
+}
+
+.q-scent-card__name {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.q-scent-card__desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.q-scent-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* ─── STEPS 13–14: Connect ───────────────────────────────────────────── */
+.q-connect-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: border-color 0.3s ease;
+  margin-bottom: 16px;
+}
+.q-connect-card.connected { border-color: var(--border-gold); }
+
+.q-connect-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.q-connect-brand svg { flex-shrink: 0; }
+
+.q-connect-card h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.q-connect-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 44ch;
+}
+
+.q-connect-data {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.q-data-chip {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.73rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.q-connect-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #6fcf97;
+}
+
+.q-connect-status::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #6fcf97;
+  display: block;
+  box-shadow: 0 0 6px rgba(111,207,151,0.5);
+}
+
+.btn--spotify {
+  background: #1DB954;
+  color: #fff;
+}
+.btn--spotify:hover {
+  background: #1ed760;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(29,185,84,0.3);
+}
+
+.btn--instagram {
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff;
+}
+.btn--instagram:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(220,39,67,0.25);
+}
+
+/* ─── STEP 15: Processing ────────────────────────────────────────────── */
+.q-processing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.q-spinner {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border-gold);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.q-processing-text {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--text);
+  text-align: center;
+}
+
+.q-processing-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ─── STEP 16: Payment ───────────────────────────────────────────────── */
+.pay-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.pay-summary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: sticky;
+  top: 88px;
+}
+
+.pay-summary__title {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.pay-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+.pay-item:first-of-type { padding-top: 0; }
+
+.pay-item__info { display: flex; flex-direction: column; gap: 3px; }
+.pay-item__name { font-size: 0.88rem; color: var(--text); font-weight: 500; }
+.pay-item__sub  { font-size: 0.75rem; color: var(--muted); }
+.pay-item__price {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.pay-sub-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+}
+
+.pay-sub-toggle input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 1px;
+  position: relative;
+  transition: all var(--t);
+}
+.pay-sub-toggle input[type="checkbox"]:checked {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.pay-sub-toggle input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 5px;
+  width: 4px; height: 7px;
+  border: 1.5px solid #09080b;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.pay-sub-label { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+.pay-sub-label span:first-child { font-size: 0.85rem; color: var(--text); font-weight: 500; }
+.pay-sub-label span:last-child  { font-size: 0.73rem; color: var(--muted); }
+.pay-sub-price {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.pay-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  margin-top: 4px;
+}
+.pay-total span:first-child { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.pay-total-amount {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.pay-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.pay-trust li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.pay-trust li::before {
+  content: '✓';
+  color: var(--gold);
+  font-size: 0.68rem;
+}
+
+/* Payment form */
+.pay-form { display: flex; flex-direction: column; gap: 16px; }
+
+.pay-form-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.q-field--row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.q-field--card input {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.08em;
+}
+
+.pay-secure {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.pay-secure::before {
+  content: '🔒';
+  font-size: 0.68rem;
+}
+
+.pay-submit-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* ─── STEP 17: Confirmation ──────────────────────────────────────────── */
+.q-confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  max-width: 560px;
+}
+
+.q-confirm__check {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 1.5rem;
+  animation: checkPop 0.4s var(--ease) both;
+}
+
+@keyframes checkPop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.q-confirm__order {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 18px;
+}
+
+.q-confirm__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.q-confirm__detail {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 20px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.q-confirm__detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+.q-confirm__detail-row span:first-child { color: var(--muted); }
+.q-confirm__detail-row span:last-child  { color: var(--text); font-weight: 500; }
+
+/* ─── OAuth Modal ────────────────────────────────────────────────────── */
+.qmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.qmodal[hidden] { display: none; }
+
+.qmodal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.qmodal__card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: modalIn 0.28s var(--ease) both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.qmodal__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  width: fit-content;
+}
+
+.qmodal__brand--spotify  { background: rgba(29,185,84,0.12); color: #1DB954; }
+.qmodal__brand--instagram{ background: rgba(220,39,67,0.1);  color: #e1306c; }
+
+.qmodal__card h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.qmodal__card p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+.qmodal__perms {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+}
+
+.qmodal__perms li {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qmodal__perms li::before { content: ''; width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; }
+.qmodal__perms li.allow { color: #6fcf97; }
+.qmodal__perms li.allow::before { background: rgba(111,207,151,0.15); box-shadow: inset 0 0 0 1px rgba(111,207,151,0.5); content: '✓'; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; }
+.qmodal__perms li.deny  { color: var(--muted); }
+.qmodal__perms li.deny::before  { background: rgba(138,132,144,0.1); box-shadow: inset 0 0 0 1px rgba(138,132,144,0.3); content: '✕'; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; }
+
+.qmodal__cta {
+  padding: 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border: none;
+  transition: all var(--t);
+}
+.qmodal__cta--spotify   { background: #1DB954; color: #fff; }
+.qmodal__cta--spotify:hover { background: #1ed760; }
+.qmodal__cta--instagram { background: linear-gradient(135deg,#f09433,#dc2743,#bc1888); color: #fff; }
+.qmodal__cta--instagram:hover { opacity: 0.88; }
+
+.qmodal__skip {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+  cursor: pointer;
+  padding: 4px;
+  transition: color var(--t);
+}
+.qmodal__skip:hover { color: var(--text); }
+
+/* ─── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .qs-nav { padding: 0 20px; gap: 12px; }
+  .qp-label { display: none; }
+  .qs-main { padding: 36px 20px 56px; align-items: flex-start; }
+  .q-choices { grid-template-columns: 1fr; }
+  .qintro-phases { grid-template-columns: 1fr; }
+  .q-scent-grid { grid-template-columns: 1fr 1fr; }
+  .pay-layout { grid-template-columns: 1fr; }
+  .pay-summary { position: static; }
+  .q-field--row { grid-template-columns: 1fr; }
+  .q-connect-card { padding: 28px 24px; }
+}
+
+@media (max-width: 440px) {
+  .q-scent-grid { grid-template-columns: 1fr; }
+  .qs-main { padding: 28px 16px 48px; }
+}

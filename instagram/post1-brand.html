@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1080px; overflow: hidden;
+    background: #09080b;
+    font-family: 'Inter', sans-serif;
+    color: #e8e0d0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wrap {
+    width: 100%; height: 100%;
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px;
+  }
+  .glow {
+    position: absolute;
+    top: -100px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 700px;
+    background: radial-gradient(ellipse at 50% 20%, rgba(201,169,110,0.14) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .glow2 {
+    position: absolute;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse at 50% 100%, rgba(201,169,110,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .logo {
+    position: absolute;
+    top: 48px; left: 64px;
+    width: 160px;
+    mix-blend-mode: screen;
+    opacity: 0.92;
+  }
+  .tag {
+    position: absolute;
+    top: 72px; right: 80px;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.6);
+  }
+  .centre {
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    gap: 32px;
+    position: relative; z-index: 1;
+  }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #c9a96e;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 1.0;
+    color: #e8e0d0;
+  }
+  h1 em {
+    font-style: italic;
+    color: #c9a96e;
+  }
+  .divider {
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+  }
+  .sub {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(232,224,208,0.55);
+    max-width: 520px;
+    letter-spacing: 0.02em;
+  }
+  .pill {
+    display: inline-flex; align-items: center;
+    border: 1px solid rgba(201,169,110,0.35);
+    border-radius: 999px;
+    padding: 10px 28px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #c9a96e;
+    gap: 12px;
+  }
+  .pill span { opacity: 0.4; }
+  .bottom {
+    position: absolute;
+    bottom: 64px; left: 50%; transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.35);
+    white-space: nowrap;
+  }
+  /* decorative corner lines */
+  .corner {
+    position: absolute;
+    width: 48px; height: 48px;
+  }
+  .corner--tl { top: 40px; left: 40px; border-top: 1px solid rgba(201,169,110,0.25); border-left: 1px solid rgba(201,169,110,0.25); }
+  .corner--tr { top: 40px; right: 40px; border-top: 1px solid rgba(201,169,110,0.25); border-right: 1px solid rgba(201,169,110,0.25); }
+  .corner--bl { bottom: 40px; left: 40px; border-bottom: 1px solid rgba(201,169,110,0.25); border-left: 1px solid rgba(201,169,110,0.25); }
+  .corner--br { bottom: 40px; right: 40px; border-bottom: 1px solid rgba(201,169,110,0.25); border-right: 1px solid rgba(201,169,110,0.25); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <div class="corner corner--tl"></div>
+  <div class="corner corner--tr"></div>
+  <div class="corner corner--bl"></div>
+  <div class="corner corner--br"></div>
+
+  <img class="logo" src="../assets/ChatGPT Image May 17, 2026 at 03_10_49 PM.png" alt="Velai" />
+  <div class="tag">velai.co.uk</div>
+
+  <div class="centre">
+    <p class="eyebrow">Powered by AI &nbsp;·&nbsp; Crafted in France</p>
+    <h1>Find your<br/><em>forever scent.</em></h1>
+    <div class="divider"></div>
+    <p class="sub">A two-minute quiz. Three vials to try at home. Then a fragrance that is — and always will be — entirely yours.</p>
+    <div class="pill">Start the quiz <span>→</span></div>
+  </div>
+
+  <div class="bottom">A fragrance that fits your life. Forever.</div>
+</div>
+</body>
+</html>
